@@ -13,15 +13,15 @@ export default function GeneralInfos(props) {
         <View>
             <InfosContainer>
                 <View>
-                    <Text> Gender: {gender} </Text>
-                    <Text> Birth Year: {props.birth_year} </Text>
-                    <Text> Height: {props.height} </Text>
+                    <Text testID="infos">Gender: {gender}</Text>
+                    <Text testID="infos"> Birth Year: {props.birth_year} </Text>
+                    <Text testID="infos"> Height: {props.height} </Text>
                 </View>
 
                 <View>
-                    <Text> Hair Color: {hairColor} </Text>
-                    <Text> Skin Color: {skinColor} </Text>
-                    <Text> Eye Color: {eyeColor} </Text>
+                    <Text testID="infos"> Hair Color: {hairColor} </Text>
+                    <Text testID="infos"> Skin Color: {skinColor} </Text>
+                    <Text testID="infos"> Eye Color: {eyeColor} </Text>
                 </View>
             </InfosContainer>
         </View>

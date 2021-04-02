@@ -17,15 +17,27 @@ export default function Infos({ route, navigation }) {
     const charName = route.params.name;
 
     useEffect(() => {
+        let mounted = true;
+
         (
             async () => {
                 await axios.get(url)
                 .then(res => res.data)
-                .then((res => getCharacterData(res)))
+                .then((res => {
+                    if (mounted) {
+                        getCharacterData(res)
+                    }
+                }))
                 .catch(error => console.error(error))
-                .finally(() => setLoading(false))
+                .finally(() => {
+                    if (mounted) {
+                        setLoading(false)
+                    }
+                })
             }
-        )()
+        )();
+
+        return () => mounted = false;
     }, [url])
 
     return (

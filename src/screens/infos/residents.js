@@ -16,15 +16,27 @@ export default function Residents(props) {
     const residentsChars = props.residents;
 
     useEffect(() => {
+        let mounted = true;
+
         (
             async () => {
                 await axios.get(residentsChars)
                 .then(res => res.data)
-                .then((res => getResidents(res)))
+                .then((res => {
+                    if (mounted) {
+                        getResidents(res)
+                    }
+                }))
                 .catch(error => console.error(error))
-                .finally(() => setLoading(false))
+                .finally(() => {
+                    if (mounted) {
+                        setLoading(false)
+                    }
+                })
             }
         )()
+
+        return () => mounted = false;
     }, [residentsChars]);
 
     return (

@@ -12,15 +12,27 @@ export default function StarShipsInfo({ route, navigation }) {
     const url = route.params.url;
     
     useEffect(() => {
+        let mounted = true;
+        
         (
             async () => {
                 await axios.get(url)
                 .then(res => res.data)
-                .then((res => getStarShipInfos(res)))
+                .then((res => {
+                    if (mounted) {
+                        getStarShipInfos(res)
+                    }
+                }))
                 .catch(error => console.error(error))
-                .finally(() => setLoading(false))
+                .finally(() => {
+                    if (mounted) {
+                        setLoading(false)
+                    }
+                })
             }
         )()
+
+        return () => mounted = false;
     }, [url]);
 
     return (

@@ -20,16 +20,27 @@ export default function HomeWorld(props) {
     const homeWorld = props.homeWorld;
 
     useEffect(() => {
+        let mounted = true;
+
         (
             async () => {
                 await axios.get(homeWorld)
                 .then(res => res.data)
-                .then((res => getHomeWorldData(res)))
+                .then((res => {
+                    if (mounted) {
+                        getHomeWorldData(res)
+                    }
+                }))
                 .catch(error => console.error(error))
-                .finally(() => setLoading(false))
+                .finally(() => {
+                    if (mounted) {
+                        setLoading(false)
+                    }
+                })
             }
         )()
 
+        return () => mounted = false;
     }, [homeWorld]);
 
     return (

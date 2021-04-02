@@ -1,0 +1,103 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render home 1`] = `
+<RCTSafeAreaView
+  emulateUnlessSupported={true}
+  style={
+    Array [
+      Object {
+        "backgroundColor": "#000",
+        "flexBasis": 0,
+        "flexGrow": 1,
+        "flexShrink": 1,
+      },
+    ]
+  }
+>
+  <View>
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#ffe81f",
+            "fontSize": 20,
+            "fontWeight": "bold",
+            "marginTop": 60,
+            "textAlign": "center",
+          },
+        ]
+      }
+      testID="title"
+    >
+       Star Wars Characters 
+    </Text>
+    <RCTScrollView
+      style={
+        Array [
+          Object {},
+        ]
+      }
+    >
+      <View>
+        <ActivityIndicator
+          animating={true}
+          color="#ffe81f"
+          hidesWhenStopped={true}
+          size="large"
+        />
+      </View>
+    </RCTScrollView>
+  </View>
+</RCTSafeAreaView>
+`;
+
+exports[`should render title 1`] = `
+<RCTSafeAreaView
+  emulateUnlessSupported={true}
+  style={
+    Array [
+      Object {
+        "backgroundColor": "#000",
+        "flexBasis": 0,
+        "flexGrow": 1,
+        "flexShrink": 1,
+      },
+    ]
+  }
+>
+  <View>
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#ffe81f",
+            "fontSize": 20,
+            "fontWeight": "bold",
+            "marginTop": 60,
+            "textAlign": "center",
+          },
+        ]
+      }
+      testID="title"
+    >
+       Star Wars Characters 
+    </Text>
+    <RCTScrollView
+      style={
+        Array [
+          Object {},
+        ]
+      }
+    >
+      <View>
+        <ActivityIndicator
+          animating={true}
+          color="#ffe81f"
+          hidesWhenStopped={true}
+          size="large"
+        />
+      </View>
+    </RCTScrollView>
+  </View>
+</RCTSafeAreaView>
+`;

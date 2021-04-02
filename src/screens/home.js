@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigation } from '@react-navigation/native';
 
 import { AppState, View, ActivityIndicator } from 'react-native';
 
@@ -14,52 +13,58 @@ import {
 } from '../styles/home-styles';
 
 export default function Home(props) {
-    const navigation = useNavigation(); 
-
     const [data, getData] = useState([]);
     const [isLoading, setLoading] = useState(true)
 
     useEffect(() => {
+        let mounted = true;
         (
             async () => {
-                await axios.get(`https://swapi.dev/api/people/`)
+                await axios.get('https://swapi.dev/api/people/')
                 .then(res => res.data)
-                .then((res => getData(res)))
+                .then((res => {
+                    if (mounted) {
+                        getData(res)
+                    }
+                }))
                 .catch(error => console.error(error))
-                .finally(() => setLoading(false))
+                .finally(() => {
+                    if (mounted) {
+                        setLoading(false)
+                    }
+                })
             }
         )();
+
+        return () => mounted = false;
     }, []);
 
     useEffect(() => {
         if (AppState.currentState === 'active') {
             setTimeout(() => {
-                navigation.navigate('modal')
+                props.navigation.navigate('modal')
             }, 45000)
         }
     }, []);
 
     return (
         <Wrapper>
+            <Title testID="title"> Star Wars Characters </Title>
             {
-                <>
-                    <Title> Star Wars Characters </Title>
-                    <ContainerScroll>
-                        {
-                            isLoading ? <ActivityIndicator size="large" color="#ffe81f" /> :
-                            
-                            
-                            data.results.map((result, key) => (
-                                <View key={key}>
-                                    <Button onPress={() => props.navigation.navigate('Infos', { url: result.url, name: result.name })}>
-                                        <ButtonText> {result.name} </ButtonText>
-                                    </Button>
-                                </View>
-                            ))
-                        }
+                <ContainerScroll>
+                    {
+                        isLoading ? <ActivityIndicator size="large" color="#ffe81f" /> :
                         
-                    </ContainerScroll>
-                </>
+                        data.results.map((result, key) => (
+                            <View key={key}>
+                                <Button onPress={() => props.navigation.navigate('Infos', { url: result.url, name: result.name })} testID="button">
+                                    <ButtonText testID="text"> {result.name} </ButtonText>
+                                </Button>
+                            </View>
+                        ))
+                    }
+                    
+                </ContainerScroll>
             }
         </Wrapper>
     );

@@ -20,15 +20,27 @@ export default function Films() {
 
 
     useEffect(() => {
+        let mounted = true;
+
         (
             async () => {
                 await axios.get('https://swapi.dev/api/films/')
                 .then(res => res.data)
-                .then(res => getFilms(res))
+                .then(res => {
+                    if (mounted) {
+                        getFilms(res)
+                    }
+                })
                 .catch(error => console.log(error))
-                .finally(() => setLoading(false))
+                .finally(() => {
+                    if (mounted) {
+                        setLoading(false)
+                    }
+                })
             }
         )()
+
+        return () => mounted = false;
     }, []);
 
     return (

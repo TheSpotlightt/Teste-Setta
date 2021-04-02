@@ -16,15 +16,27 @@ export default function StarShips(props) {
     const starShips = props.starShips;
 
     useEffect(() => {
+        let mounted = true;
+
         (
             async () => {
                 await axios.get(starShips)
                 .then(res => res.data)
-                .then((res => getStarShipsData(res)))
+                .then((res => {
+                    if (mounted) {
+                        getStarShipsData(res)
+                    }
+                }))
                 .catch(error => console.error(error))
-                .finally(() => setLoading(false))
+                .finally(() => {
+                    if (mounted) {
+                        setLoading(false)
+                    }
+                })
             }
         )()
+
+        return () => mounted = false;
     }, [starShips]);
 
 

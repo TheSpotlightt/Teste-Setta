@@ -21,15 +21,27 @@ export default function FilmInfos({ route }) {
     const url = route.params.url;
 
     useEffect(() => {
+        let mounted = true;
+
         (
             async () => {
                 await axios.get(url)
                 .then(res => res.data)
-                .then((res => getFilmData(res)))
+                .then((res => {
+                    if (mounted) {
+                        getFilmData(res)
+                    }
+                }))
                 .catch(error => console.error(error))
-                .finally(() => setLoading(false))
+                .finally(() => {
+                    if (mounted) {
+                        setLoading(false)
+                    }
+                })
             }
         )()
+
+        return () => mounted = false;
     }, [url])
     
     return (
